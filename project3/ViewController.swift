@@ -18,6 +18,7 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
     }
     @IBOutlet weak var countrieView: UITableView!
    
+    @IBOutlet weak var counLable: UILabel!
     let cellIdentifier: String = "cell"
     
     var countries: [Countries] = []
@@ -29,6 +30,8 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath)
         let con: Countries = self.countries[indexPath.row]
+    
+    
         cell.textLabel?.text = con.korean_name + "(\(con.asset_name))"
         return cell
         
@@ -41,15 +44,16 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
             return
         }
         do {
-            self.countries = try! jsonDecoder.decode([Countries].self, from: dataAsset.data)
+            self.countries = try jsonDecoder.decode([Countries].self, from: dataAsset.data)
         } catch {
             print(error.localizedDescription)
         }
+        self.countrieView.reloadData()
         }
         // 왜안되는거지
-        //self.tableView.reloadData()
         // Do any additional setup after loading the view.
     }
+
 
 
 
